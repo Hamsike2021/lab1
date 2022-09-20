@@ -1,0 +1,47 @@
+%% Creating pitches
+pitchDur = 1;
+fs = 8000;
+timeArray = 0 : 1/fs: pitchDur;
+pitchA = 1* sin(2* pi *pitchFreq(1)*timeArray  + 0);
+pitchB = 1* sin(2* pi *pitchFreq(2)*timeArray  + 0);
+pitchC = 1* sin(2* pi *pitchFreq(3)*timeArray  + 0);
+pitchD = 1* sin(2* pi *pitchFreq(4)*timeArray  + 0);
+pitchF = 1* sin(2* pi *pitchFreq(5)*timeArray  + 0);
+pitchE = 1* sin(2* pi *pitchFreq(6)*timeArray  + 0);
+pitchG = 1* sin(2* pi *pitchFreq(7)*timeArray  + 0);
+%% Read the file with pitches
+fid = fopen('song.txt');
+song = fscanf(fid, '%s');
+whos song;
+%% Create the song and the file.wav
+singsong = [pitchF pitchC pitchF pitchC pitchF pitchE pitchE pitchE pitchC pitchE pitchC pitchE pitchF pitchF pitchF pitchC pitchF pitchC pitchF pitchE pitchE pitchE pitchC pitchE pitchC pitchF];
+sound(singsong, fs);
+audiowrite('firstSong.wav',singsong,fs)
+auidoWafInfo = audioinfo('firstSong.wav');
+wavFileName = auidoWafInfo.Filename;
+wavFileCompMet = auidoWafInfo.CompressionMethod;
+wavFileNumCh = auidoWafInfo.NumChannels;
+wavFileRate = auidoWafInfo.SampleRate;
+wavFileSamples = auidoWafInfo.TotalSamples;
+wavFileDur = auidoWafInfo.Duration;
+%% Listen the mp3file
+[y,Fs] = audioread('song.mp3');
+sound(y,Fs);
+audiow = audioinfo('song.mp3');
+wavFileName1 = audiow.Filename;
+wavFileCompMet1 = audiow.CompressionMethod;
+wavFileNumCh1 = audiow.NumChannels;
+wavFileRate1 = audiow.SampleRate;
+wavFileSamples1 = audiow.TotalSamples;
+wavFileDur1 = audiow.Duration;
+save data.mat wavFileName1 wavFileCompMet1 wavFileNumCh1 wavFileRate1 wavFileSamples1 wavFileDur1
+fprintf("----------.MP3 VS . WAV----------\n");
+fprintf("          %s VS %s \n",wavFileName,  wavFileName1);
+fprintf("          %s VS %s \n",wavFileCompMet, wavFileCompMet1);
+fprintf("          %s VS %s \n",wavFileDur, wavFileDur1);
+fprintf("          %s VS %s \n",wavFileSamples, wavFileSamples1);
+fprintf("------------------------------\n");
+disp(['         ',wavFileName, 'VS', wavFileName1]);
+disp(['          ', num2str(wavFileCompMet), 'VS',  num2str(wavFileCompMet1)]);
+disp(['          ', num2str(wavFileDur), 'VS', num2str(wavFileDur1)]);
+disp(['          ', num2str(wavFileSamples), 'VS', num2str(wavFileSamples1)]);
